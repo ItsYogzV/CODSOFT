@@ -1,0 +1,105 @@
+#include <iostream>
+using namespace std;
+const int MAX=10;
+
+struct Task {
+    string description;
+    bool completed;
+    Task():completed(false){}
+};
+
+class ToDoList{
+private:
+    Task tasks[MAX];
+    int numTasks;
+
+public:
+    ToDoList():numTasks(0){}
+
+    void addTask(const string & description){
+        if(numTasks<MAX){
+            tasks[numTasks].description = description;
+            cout<<"\nTask added: " <<description;
+            numTasks++;
+        }else{
+            cout<<"\nTask list is full. Cannot add more tasks.";
+        }
+    }
+    void viewTasks() const{
+        if(numTasks==0){
+            cout<<"\nNo tasks in the list.";
+            return;
+        }
+        cout<<"Tasks:"<<endl;
+        for (int i =0;i<numTasks;++i) {
+            cout<<"- "<< tasks[i].description;
+            if (tasks[i].completed){
+                cout<<" (Completed)";
+            }
+            cout << endl;
+        }
+    }
+    void markTaskCompleted(int index) {
+        if (index >= 0 && index< numTasks){
+            tasks[index].completed = true;
+            cout<<"\nTask marked as completed: " << tasks[index].description;
+        }else{
+            cout<<"Invalid task index.";
+        }
+    }
+
+    void removeTask(int index){
+        if(index>=0 && index< numTasks){
+            for (int i=index;i< numTasks-1;++i){
+                tasks[i]=tasks[i + 1];
+            }
+            numTasks--;
+            cout <<"\nTask removed.";
+        }else{
+            cout <<"\nInvalid task index.";
+        }
+    }
+};
+
+int main(){
+    ToDoList todoList;
+    int choice;
+    do{
+        cout <<"\n1.Add Task\n2.View Tasks\n3.Mark Task as Completed\n4.Remove Task\n5.Exit\nChoose An Option:";
+        cin >> choice;
+        switch (choice){
+            case 1:{
+                cout<<"\nEnter task description:";
+                string description;
+                cin.ignore();
+                getline(cin, description);
+                todoList.addTask(description);
+                break;
+            }
+            case 2:
+                todoList.viewTasks();
+                break;
+            case 3:{
+                cout<<"\nEnter the index of the completed task: ";
+                int index;
+                cin>>index;
+                todoList.markTaskCompleted(index);
+                break;
+            }
+            case 4:{
+                cout<<"\nEnter the index of the task to remove: ";
+                int index;
+                cin>>index;
+                todoList.removeTask(index);
+                break;
+            }
+            case 5:
+                cout<<"\nExiting program.";
+                break;
+            default:
+                cout<<"\nInvalid choice";
+        }
+    }while(choice!=5);
+
+    return 0;
+}

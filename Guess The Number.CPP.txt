@@ -1,0 +1,26 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+int main()
+{
+    int number=(rand()%1000)+1;
+    int userGuess;
+    char ch;
+    do
+    {
+        cout<<endl<<"Guess The Number:";
+        cin>>userGuess;
+        if(userGuess>number)
+        {
+            cout<<endl<<"Wrong Guess,Try Low";
+        }
+        else if(userGuess<number)
+        {
+            cout<<endl<<"Wrong Guess,Try High";
+        }
+        else
+        {
+            cout<<endl<<"Congratulations,Correct Guess";
+        }
+    }while(userGuess!=number);
+}
